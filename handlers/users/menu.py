@@ -2,7 +2,7 @@ from aiogram.dispatcher.filters import Command, Text
 from aiogram.types import Message, ReplyKeyboardRemove
 from aiogram import types
 from loader import dp
-from .data import question_answer as qa_data
+from .data import question_answer as qa_data, person_image
 from keyboards.default.main import question_answer as qa_btn, menu
 from keyboards.inline.inline_menu import contact_menu
 
@@ -10,7 +10,7 @@ from keyboards.inline.inline_menu import contact_menu
 @dp.message_handler(Text("💾Ma'lumotlar"))
 async def show_menu(message: Message):
     answer = """
-    <b>_________Asosiy Ma'lumotlar_________</b>
+    <b>Asosiy Ma'lumotlar</b>
     
 <b>👤Ism:</b> Akbarali Asqaraliyev
 
@@ -22,7 +22,7 @@ async def show_menu(message: Message):
 
 <b>🎓Ta'lim:</b> Tugallanmagan oliy ta'lim 
     """
-    await message.answer(answer)
+    await message.answer_photo(person_image, caption=answer)
 
 
 @dp.message_handler(Text("⁉️Savol javob"))
@@ -35,9 +35,16 @@ async def main_menu(message: Message):
     await message.answer("Quyidagilarni biribi tanlang", reply_markup=menu)
 
 
+# todo get document id
 @dp.message_handler(content_types=types.ContentType.DOCUMENT)
 async def get_document_id(message: Message):
-    await message.reply(message.document.file_id)
+    a = f'{person_image}'
+    await message.reply(f'<code>{message.document.file_id}</code>')
+
+
+@dp.message_handler(content_types=types.ContentType.PHOTO)
+async def get_file_id_p(message: types.Message):
+    await message.reply(f'<code>{message.photo[-1].file_id}</code>')
 
 
 @dp.message_handler(Text("📋Resume"))

@@ -7,3 +7,5 @@ contacts = {
     "Github": "https://github.com/akbarali-dev",
     "Linkedin": "https://www.linkedin.com/in/akbarali-asqaraliyev-87105522a/"
 }
+
+person_image = "AgACAgIAAxkBAAO3Zl1uLsDMcRhckCNrq4ct8kLRUzMAAjjeMRtgXsBLVt6pqqz6y7oBAAMCAAN5AAM1BA"
