@@ -9,3 +9,6 @@ contacts = {
 }
 
 person_image = "AgACAgIAAxkBAAO3Zl1uLsDMcRhckCNrq4ct8kLRUzMAAjjeMRtgXsBLVt6pqqz6y7oBAAMCAAN5AAM1BA"
+certificate_images = ["AgACAgIAAxkBAAPVZl1yDcuuIvEQYbhIkx2IJU0jpTYAAn3aMRs4XPFKvdfu91zFaLUBAAMCAAN5AAM1BA",
+                      "AgACAgIAAxkBAAPXZl1yFzwFIrrDv949h-TzIPJxRaoAAn_aMRs4XPFKfJptifOYdjUBAAMCAAN5AAM1BA",
+                      "AgACAgIAAxkBAAPZZl1yIIYVI38khIxuD6YxUUeEmWYAAoHaMRs4XPFKa5vqeYurcA8BAAMCAAN4AAM1BA"]

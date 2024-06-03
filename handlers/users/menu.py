@@ -2,7 +2,7 @@ from aiogram.dispatcher.filters import Command, Text
 from aiogram.types import Message, ReplyKeyboardRemove
 from aiogram import types
 from loader import dp
-from .data import question_answer as qa_data, person_image
+from .data import question_answer as qa_data, person_image, certificate_images
 from keyboards.default.main import question_answer as qa_btn, menu
 from keyboards.inline.inline_menu import contact_menu
 
@@ -33,6 +33,14 @@ async def show_menu(message: Message):
 @dp.message_handler(Text("🏠Asosiy menu"))
 async def main_menu(message: Message):
     await message.answer("Quyidagilarni biribi tanlang", reply_markup=menu)
+
+
+@dp.message_handler(Text("🏆Sertifikatlar"))
+async def main_menu(message: Message):
+    album = types.MediaGroup()
+    for image in certificate_images:
+        album.attach_photo(image)
+    await message.answer_media_group(media=album)
 
 
 # todo get document id
