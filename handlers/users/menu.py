@@ -1,28 +1,38 @@
 from aiogram.dispatcher.filters import Command, Text
-from aiogram.types import Message, ReplyKeyboardRemove
+from aiogram.types import Message, ReplyKeyboardRemove, CallbackQuery
 from aiogram import types
+import logging
 from loader import dp
-from .data import question_answer as qa_data, person_image, certificate_images
+from .personal_data import question_answer as qa_data, person_image, certificate_images
 from keyboards.default.main import question_answer as qa_btn, menu
-from keyboards.inline.inline_menu import contact_menu
+from keyboards.inline.inline_menu_key import contact_menu, portfolio_menu
+from data.client import get_data
+
+
+# @dp.callback_query_handler(text='aiogram')
+# async def show_menu(message: CallbackQuery):
+#     logging.info(message)
+#     await message.answer("Quyidagilarni biribi tanlang")
 
 
 @dp.message_handler(Text("💾Ma'lumotlar"))
 async def show_menu(message: Message):
-    answer = """
+    data = get_data('data')
+    print()
+    answer = f"""
     <b>Asosiy Ma'lumotlar</b>
     
-<b>👤Ism:</b> Akbarali Asqaraliyev
+<b>👤Ism:</b> {data['full_name']}
 
-<b>🟢Yosh:</b> 21
+<b>🟢Yosh:</b> {data['age']}
 
-<b>💻Kasbi:</b> Fullstack developer
+<b>💻Kasbi:</b> {data['job_title']}
 
-<b>📍Manzil:</b> Toshkent
+<b>📍Manzil:</b> {data['location']}
 
-<b>🎓Ta'lim:</b> Tugallanmagan oliy ta'lim 
+<b>🎓Ta'lim:</b> {data['educations']} 
     """
-    await message.answer_photo(person_image, caption=answer)
+    await message.answer_photo(data['image_link'], caption=answer)
 
 
 @dp.message_handler(Text("⁉️Savol javob"))
@@ -38,8 +48,9 @@ async def main_menu(message: Message):
 @dp.message_handler(Text("🏆Sertifikatlar"))
 async def main_menu(message: Message):
     album = types.MediaGroup()
-    for image in certificate_images:
-        album.attach_photo(image)
+    certificates = get_data("file", 'S')
+    for image in certificates:
+        album.attach_photo(image['file_link'])
     await message.answer_media_group(media=album)
 
 
@@ -57,8 +68,17 @@ async def get_file_id_p(message: types.Message):
 
 @dp.message_handler(Text("📋Resume"))
 async def get_resume(message: Message):
-    document_id = "BQACAgIAAxkBAAODZlxzYH7DkSiV9_-KUO-LZrvrlRYAAng4AAI1uhBJ_kr5ti_agV01BA"
-    await message.answer_document(document_id, caption="Resume")
+    album = types.MediaGroup()
+    certificates = get_data("file", 'R')
+    for doc in certificates:
+        album.attach_document(doc['file_link'])
+    # document_id = "BQACAgIAAxkBAAODZlxzYH7DkSiV9_-KUO-LZrvrlRYAAng4AAI1uhBJ_kr5ti_agV01BA"
+    await message.answer_media_group(media=album)
+
+
+@dp.message_handler(Text("🧰Portfolio"))
+async def get_resume(message: Message):
+    await message.answer("Quyidagilardan birini tanlang", reply_markup=portfolio_menu)
 
 
 @dp.message_handler(Text("📞Kontakt"))
@@ -68,5 +88,7 @@ async def get_resume(message: Message):
 
 @dp.message_handler(content_types=types.ContentType.TEXT)
 async def question_answer(message: Message):
-    if message.text in qa_data:
-        await message.answer(qa_data[message.text])
+    answers = get_data('qa', message.text)
+    logging.info(message)
+
+    await message.answer(answers['answer'])
