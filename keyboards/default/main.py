@@ -30,6 +30,4 @@ for qa in questions:
     buttons = [qa['question']]
     question_answer.add(*buttons)
 main_btn = ["🏠Asosiy menu"]
-chat = KeyboardButton()
-chat_btn = ["🏠Asosiy menu", ]
 question_answer.add(*main_btn)
