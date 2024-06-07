@@ -89,6 +89,4 @@ async def get_resume(message: Message):
 @dp.message_handler(content_types=types.ContentType.TEXT)
 async def question_answer(message: Message):
     answers = get_data('qa', message.text)
-    logging.info(message)
-
     await message.answer(answers['answer'])
