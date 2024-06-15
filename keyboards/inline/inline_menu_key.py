@@ -1,7 +1,6 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from handlers.users.personal_data import contacts, portfolios
 from .callback_data import portfolio_data
-from data.client import get_data
 
 
 def contact_menu(contacts):

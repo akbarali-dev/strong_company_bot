@@ -1,6 +1,5 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, WebAppInfo, MenuButton, KeyboardButtonRequestChat
 from handlers.users.personal_data import question_answer as qa
-from data.client import get_data
 from loader import db
 
 web = WebAppInfo(url="https://javthon.uz/")

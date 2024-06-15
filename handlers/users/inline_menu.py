@@ -6,7 +6,6 @@ import logging
 from keyboards.inline.inline_menu_key import portfolio_menu
 from keyboards.inline.callback_data import portfolio_data
 from .personal_data import portfolios
-from data.client import get_data
 
 
 def get_last_number(s):

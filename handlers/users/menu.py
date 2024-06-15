@@ -6,7 +6,6 @@ from loader import dp, db
 from .personal_data import question_answer as qa_data, person_image, certificate_images
 from keyboards.default.main import question_btn as qa_btn, menu
 from keyboards.inline.inline_menu_key import contact_menu, portfolio_menu
-from data.client import get_data
 
 
 # @dp.callback_query_handler(text='aiogram')
