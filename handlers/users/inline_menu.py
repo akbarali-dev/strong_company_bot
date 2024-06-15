@@ -1,6 +1,6 @@
 import re
 from aiogram.dispatcher.filters import Command, Text
-from loader import dp
+from loader import dp, db
 from aiogram.types import Message, CallbackQuery
 import logging
 from keyboards.inline.inline_menu_key import portfolio_menu
@@ -19,16 +19,17 @@ def get_last_number(s):
 
 @dp.callback_query_handler(text_contains='portfolio')
 async def show_menu(message: CallbackQuery):
-    logging.info(message.data)
-    id = get_last_number(message.data)
-    logging.info(id)
-    p_data = get_data('portfolio', id)
+    p_id = get_last_number(message.data)
+    p_data = await db.select_portfolio_by_id(id=p_id)
+
     answer = f"""
     <b>{p_data['title']}</b>
     {p_data['description']}
     <a href='{p_data['link']}'>havola</a>
     """
-    await message.message.edit_text(answer, reply_markup=portfolio_menu)
+    portfolio = await db.select_portfolio(user_id=1474104201)
+    await message.message.edit_text(answer, reply_markup=portfolio_menu(portfolio))
+    await message.answer(cache_time=3)
 
 # @dp.callback_query_handler(portfolio_data)
 # async def show_menu(call: CallbackQuery, callback_data: dict):

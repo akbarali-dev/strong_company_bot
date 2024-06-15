@@ -3,15 +3,22 @@ from handlers.users.personal_data import contacts, portfolios
 from .callback_data import portfolio_data
 from data.client import get_data
 
-contact_menu = InlineKeyboardMarkup(row_width=1)
 
-for c in get_data('contact'):
-    contact = InlineKeyboardButton(text=c['name'], url=c['link'])
-    contact_menu.insert(contact)
+def contact_menu(contacts):
+    btns = InlineKeyboardMarkup(row_width=1)
 
-portfolio_menu = InlineKeyboardMarkup(row_width=1)
-for p in get_data('portfolio'):
-    portfolio = InlineKeyboardButton(text=p['title'], callback_data=portfolio_data.new(name='portfolio'+str(p['id'])))
-    portfolio_menu.insert(portfolio)
+    for c in contacts:
+        contact = InlineKeyboardButton(text=c['name'], url=c['link'])
+        btns.insert(contact)
+    return btns
+
+
+def portfolio_menu(portfolios):
+    portfolio_btn = InlineKeyboardMarkup(row_width=1)
+    for p in portfolios:
+        portfolio = InlineKeyboardButton(text=p['title'],
+                                         callback_data=portfolio_data.new(name='portfolio' + str(p['id'])))
+        portfolio_btn.insert(portfolio)
+    return portfolio_btn
 
 # ])
